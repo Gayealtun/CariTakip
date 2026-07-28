@@ -12,3 +12,4 @@ public class ApplicationDbContext: DbContext
 
         public DbSet<User> Users {get; set; }//user entitylerinden oluşan bir koleksiyonu
 }                                            // veritabanında yönet 
+//User class'ını veritabanında tablo olarak kullanacağım.

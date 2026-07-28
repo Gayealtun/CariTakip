@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TaskTracking.Business\TaskTracking.Business.csproj" />
-    <ProjectReference Include="..\TaskTracking.DataAccess\TaskTracking.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
