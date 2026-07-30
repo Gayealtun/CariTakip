@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TaskTracking.Entities;
 using TaskTracking.Business.Dtos;
 using TaskTracking.Entities.Enums;
+using System.Drawing;
 
 
 namespace TaskTracking.API.Controllers;
@@ -68,4 +69,53 @@ public async Task<ActionResult<List<Cari>>> GetAll()
         }
         
     } 
-}   
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult<Cari>> Update([FromRoute] int id,
+                                                 [FromBody] UpdateCariDto dto)
+    {
+        try
+        {
+            Cari? existingCari = await _cariService.GetByIdAsync(id);
+
+            if(existingCari == null)
+            {
+                return NotFound("Cari bulunamadı");
+            }
+        existingCari.Unvan = dto.Unvan;
+        existingCari.VergiNoTC = dto.VergiNoTC;
+        existingCari.Adres = dto.Adres;
+        existingCari.Telefon = dto.Telefon;
+        existingCari.Email = dto.Email;
+        existingCari.Tip = (CariTipi)dto.Tip;
+        existingCari.Iban = dto.Iban;
+        existingCari.AktifMi = dto.AktifMi;
+        existingCari.Kredilimiti = dto.KrediLimiti;
+
+        Cari updatedCari = await _cariService.UpdateAsync(existingCari);
+        return Ok(updatedCari);
+
+        }
+        catch(ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(ex.Message);
+        }
+    }
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> Delete([FromRoute] int id)
+    {
+        try
+        {
+            await _cariService.DeleteAsync(id);
+            return NoContent();
+        }
+        catch(KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+}
+    
