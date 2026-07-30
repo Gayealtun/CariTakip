@@ -2,6 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using TaskTracking.DataAccess.Context;
 using TaskTracking.Business;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using TaskTracking.Business.Services.Interfaces;
+using TaskTracking.DataAccess.Repositories;
+using TaskTracking.DataAccess.Repositories.Interfaces;
+using TaskTracking.Business.Services;
 //uygulamanın hazırlık aşaması
 var builder = WebApplication.CreateBuilder(args); 
 
@@ -10,8 +14,10 @@ builder.Services.AddOpenApi();
 //controller sınıflarını sisteme kaydeder
 builder.Services.AddControllers();
 //business data access repository dbcontext kayıtlarını yapar,DI metodu yani 
-builder.Services.AddBusiness(builder.Configuration.GetConnectionString("DefaultConnection")!
-);
+builder.Services.AddBusiness(builder.Configuration.GetConnectionString("DefaultConnection")!);
+
+builder.Services.AddScoped<ICariRepository, CariRepository>();
+builder.Services.AddScoped<ICariService, CariService>();
 
 var app = builder.Build ();
 if (app.Environment.IsDevelopment()){

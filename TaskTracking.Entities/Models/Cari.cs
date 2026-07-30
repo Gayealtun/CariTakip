@@ -14,6 +14,5 @@ public class Cari
     public string? Iban{get;set;}
     public bool AktifMi{get;set;} = true ;
     public decimal Kredilimiti{get;set;}
-
-       public ICollection <CariHareket> Hareketler {get;set;} =new List <CariHareket>();
+    public ICollection <CariHareket> Hareketler {get;set;} =new List <CariHareket>();
 }

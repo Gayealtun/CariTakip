@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TaskTracking.Business.Services.Interfaces;
-using TaskTracking.Entities.Models
-
-;
+using TaskTracking.Entities.Models;
 
 namespace TaskTracking.API.Controllers;
 [ApiController]
