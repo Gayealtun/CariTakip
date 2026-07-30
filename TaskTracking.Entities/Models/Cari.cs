@@ -1,0 +1,19 @@
+
+using TaskTracking.Entities.Enums;
+namespace TaskTracking.Entities;
+public class Cari
+{
+    public int Id {get;set;}
+    public string Unvan{get;set;} = string.Empty;
+    public string? VergiNoTC{get; set;}
+    public string? Adres {get; set;}
+    public string? Telefon{get; set;}
+    public string? Email {get;set;}
+    public CariTipi Tip{get; set;}
+    public DateTime OluşturmaTarihi {get;set;} =DateTime.UtcNow;
+    public string? Iban{get;set;}
+    public bool AktifMi{get;set;} = true ;
+    public decimal Kredilimiti{get;set;}
+
+       public ICollection <CariHareket> Hareketler {get;set;} =new List <CariHareket>();
+}

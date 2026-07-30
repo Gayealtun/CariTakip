@@ -1,4 +1,8 @@
 
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Principal;
+
 namespace TaskTracking.Entities.Models;
 
 public class User
@@ -14,3 +18,4 @@ public class User
 
 
 }
+
