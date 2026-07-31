@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="CariTakip.API/CariTakip.API.csproj" />
+  <Project Path="CariTakip.Business/CariTakip.Business.csproj" />
+  <Project Path="CariTakip.DataAccess/CariTakip.DataAccess.csproj" />
+  <Project Path="CariTakip.Entities/CariTakip.Entities.csproj" />
+</Solution>

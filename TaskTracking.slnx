@@ -1,6 +1,0 @@
-<Solution>
-  <Project Path="TaskTracking.API/TaskTracking.API.csproj" />
-  <Project Path="TaskTracking.Business/TaskTracking.Business.csproj" />
-  <Project Path="TaskTracking.DataAccess/TaskTracking.DataAccess.csproj" />
-  <Project Path="TaskTracking.Entities/TaskTracking.Entities.csproj" />
-</Solution>
