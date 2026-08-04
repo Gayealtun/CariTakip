@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using CariTakip.Business.Services.Interfaces;
 using CariTakip.Entities.Models;
+using CariTakip.API.Services;
+using CariTakip.Business.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CariTakip.API.Controllers;
 [ApiController]
@@ -9,10 +12,12 @@ namespace CariTakip.API.Controllers;
 public class UsersController : ControllerBase
 {
     private readonly IUserService _UserService;
+    private readonly JwtTokenService _jwtTokenService;
 
-    public UsersController(IUserService userService)
+    public UsersController(IUserService userService, JwtTokenService jwtTokenService)
     {
         _UserService = userService;
+         _jwtTokenService = jwtTokenService;
     }
     //tüm kullanıcıları getir 
     [HttpGet]
@@ -42,18 +47,29 @@ public class UsersController : ControllerBase
         return Ok(createdUser);
     }
     //giriş yap
+    [AllowAnonymous]
     [HttpPost("login")]
-    public async Task <ActionResult<User>> Login(User loginUser)
+    public async Task <ActionResult<User>> Login(LoginDto dto)
     {
         User? user = await _UserService.LoginAsync(
-            loginUser.UserName,
-            loginUser.Password );
+            dto.UserName,
+           dto.Password );
 
             if (user == null)
         {
-            return Unauthorized();
+            return Unauthorized(new {message =" kullanici adi veya şifre hatali"});
         }
-        return Ok(user);
+        string token = _jwtTokenService.CreateToken(user);
+
+        return Ok(new
+        {
+            token ,
+            userId= user.Id,
+            userName = user.UserName,
+            firstName = user.FirstName,
+            lastName = user.LastName
+
+        });
     }
 }
 

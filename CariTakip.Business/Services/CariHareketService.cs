@@ -113,6 +113,22 @@ public class CariHareketService : ICariHareketService
         await _cariHareketRepository.DeleteAsync(hareket);
     }
 
+    public async Task<decimal> GetBakiyeAsync(int cariId)
+{
+    var hareketler =
+        await _cariHareketRepository.GetByCariIdAsync(cariId);
+
+    decimal toplamBorc = hareketler
+        .Where(h => h.Tip == HareketTuru.borc)
+        .Sum(h => h.Tutar);
+
+    decimal toplamAlacak = hareketler
+        .Where(h => h.Tip == HareketTuru.alacak)
+        .Sum(h => h.Tutar);
+
+    return toplamBorc - toplamAlacak;
+}
+
     private static void Validate(
         decimal tutar,
         HareketTuru tip,

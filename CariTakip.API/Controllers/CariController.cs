@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using CariTakip.Entities;
 using CariTakip.Business.Dtos;
 using CariTakip.Entities.Enums;
-using System.Drawing;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace CariTakip.API.Controllers;
 
+[Authorize]//geçerli token ı olmayan endpointleri kullanamaz
 [ApiController] //sınıf bir web api 
 [Route("api/[controller]")]
 public class CariController : ControllerBase

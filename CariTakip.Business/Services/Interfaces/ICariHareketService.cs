@@ -20,4 +20,5 @@ public interface ICariHareketService
         UpdateCariHareketDto dto);
 
     Task DeleteAsync(int id);
+    Task<decimal> GetBakiyeAsync(int cariId);
 }

@@ -4,9 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using CariTakip.Business.Dtos;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Runtime.InteropServices;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CariTakip.API.Controllers;
-
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 
@@ -38,41 +39,49 @@ public class CariHareketController : ControllerBase
         return Ok(hareket);
     }
 
-    [HttpGet("cariId:id")]
+    [HttpGet("cari/{cariId:int}")]
     public async Task<IActionResult> GetByCariId(int cariId)
     {
         var hareketler = await _cariHareketService.GetByCariIdAsync(cariId);
 
         return Ok(hareketler);
     }
+    [HttpGet("cari/{cariId:int}/bakiye")]
+public async Task<IActionResult> GetBakiye(int cariId)
+{
+    decimal bakiye =
+        await _cariHareketService.GetBakiyeAsync(cariId);
+
+    return Ok(new
+    {
+        cariId,
+        bakiye
+    });
+}
 
     [HttpPost] 
     public async Task <IActionResult> Create(CreateCariHareketDto dto)
     {
-        //dtodaki verileri gerçek entitye aktarma 
-        var CariHareket = new CariHareket
-        { 
-        CariId = dto.CariId,
-        Tarih = dto.Tarih ?? DateTime.UtcNow,
-        Tip = dto.Tip,
-        Aciklama = dto.Aciklama,
-        Tutar = dto.Tutar,
-        Kaynak = dto.Kaynak,
-        KaynakId = dto.KaynakId,
-        OlusturmaTarihi = DateTime.UtcNow
-        };
-       //service çağrısı 
+
+       var hareket =
         await _cariHareketService.CreateAsync(dto);
 
-        return CreatedAtAction(
-            nameof(GetById),
-            new{id=CariHareket.Id},
-            CariHareket
-        );
+        return Ok(new
+    {
+        hareket.Id,
+        hareket.CariId,
+        hareket.Tarih,
+        hareket.Tip,
+        hareket.Aciklama,
+        hareket.Tutar,
+        hareket.Kaynak,
+        hareket.KaynakId,
+        hareket.OlusturmaTarihi
+    });
     }
 
-    [HttpPut]
-    public async Task<IActionResult> Update(UpdateCariHareketDto dto,int id)
+    [HttpPut ("{id:int}")]
+    public async Task<IActionResult> Update(int id, UpdateCariHareketDto dto)
     {
         await _cariHareketService.UpdateAsync(id, dto);
 
@@ -85,6 +94,6 @@ public class CariHareketController : ControllerBase
         //controller ın yaptığı iş
         await _cariHareketService.DeleteAsync(id);
         return NoContent();
-        
+
     }
 }
