@@ -4,6 +4,7 @@ using CariTakip.Entities.Models;
 using CariTakip.API.Services;
 using CariTakip.Business.Dtos;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace CariTakip.API.Controllers;
 [ApiController]
@@ -27,8 +28,8 @@ public class UsersController : ControllerBase
         return Ok(users);
     }
     //id ye göre kullanıcı getir 
-    [HttpGet("{id:int}")]
-    public async Task<ActionResult<User>> GetById([FromRoute]int id)
+    [HttpGet("{id:Guid}")]
+    public async Task<ActionResult<User>> GetById([FromRoute]Guid id)
     {
         User? user = await _UserService.GetByIdAsync(id);
 
@@ -71,5 +72,67 @@ public class UsersController : ControllerBase
 
         });
     }
+    [Authorize]
+[HttpGet("me")]
+public async Task<IActionResult> GetProfile()
+{
+    string? userIdValue =
+        User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+    if (!Guid.TryParse(userIdValue, out Guid userId))
+    {
+        return Unauthorized();
+    }
+
+    var user = await _UserService.GetProfileAsync(userId);
+
+    if (user == null)
+    {
+        return NotFound();
+    }
+
+    return Ok(new
+    {
+        user.Id,
+        user.FirstName,
+        user.LastName,
+        user.Gender,
+        user.BirthDate,
+        user.NationalId,
+        user.UserName
+    });
+}
+[Authorize]
+[HttpPut("me")]
+public async Task<IActionResult> UpdateProfile(
+    UpdateProfileDto dto)
+{
+    string? userIdValue =
+        User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+    if (!Guid.TryParse(userIdValue, out Guid userId))
+    {
+        return Unauthorized();
+    }
+
+    var user =
+        await _UserService.UpdateProfileAsync(userId, dto);
+
+    if (user == null)
+    {
+        return NotFound();
+    }
+
+    return Ok(new
+    {
+        user.Id,
+        user.FirstName,
+        user.LastName,
+        user.Gender,
+        user.BirthDate,
+        user.NationalId,
+        user.UserName
+    });
+}
 }
 

@@ -29,8 +29,18 @@ export async function createCari(cari) {
   });
 
   if (!response.ok) {
-    throw new Error("Cari oluşturulamadı.");
-  }
+  const errorText = await response.text();
+
+  console.log(
+    "Cari oluşturma hatası:",
+    response.status,
+    errorText
+  );
+
+  throw new Error(
+    errorText || `Cari oluşturulamadı. (${response.status})`
+  );
+}
 
   return await response.json();
 }
@@ -65,4 +75,22 @@ export async function deleteCari(id) {
   if (!response.ok) {
     throw new Error("Cari silinemedi.");
   }
+}
+export async function getCariById(id) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(
+    `http://localhost:5230/api/Cari/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Cari bilgisi alınamadı.");
+  }
+
+  return await response.json();
 }

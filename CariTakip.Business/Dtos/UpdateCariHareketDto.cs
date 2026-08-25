@@ -9,5 +9,5 @@ public class UpdateCariHareketDto
     public string? Aciklama { get; set; }
     public decimal Tutar { get; set; }
     public KaynakTuru Kaynak { get; set; }
-    public int? KaynakId { get; set; }
+    public Guid? KaynakId { get; set; }
 }

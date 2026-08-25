@@ -8,17 +8,17 @@ public interface ICariHareketService
 {
     Task<List<CariHareket>> GetAllAsync();
 
-    Task<CariHareket?> GetByIdAsync(int id);
+    Task<CariHareket?> GetByIdAsync(Guid id);
 
-    Task<List<CariHareket>> GetByCariIdAsync(int cariId);
+    Task<List<CariHareket>> GetByCariIdAsync(Guid cariId);
 
     Task<CariHareket> CreateAsync(
         CreateCariHareketDto dto);
 
     Task<CariHareket> UpdateAsync(
-        int id,
+        Guid id,
         UpdateCariHareketDto dto);
 
-    Task DeleteAsync(int id);
-    Task<decimal> GetBakiyeAsync(int cariId);
+    Task DeleteAsync(Guid id);
+    Task<decimal> GetBakiyeAsync(Guid cariId);
 }

@@ -1,6 +1,7 @@
 using CariTakip.Business.Services.Interfaces;
 using CariTakip.DataAccess.Repositories.Interfaces;
 using CariTakip.Entities.Models;
+using CariTakip.Business.Dtos;
 
 namespace CariTakip.Business.Services;
 
@@ -18,7 +19,7 @@ public class UserService : IUserService
         return await _userRepository.GetAllAsync();
     }
 
-    public async Task<User?> GetByIdAsync(int id)
+    public async Task<User?> GetByIdAsync(Guid id)
     {
         return await _userRepository.GetByIdAsync(id);
     }
@@ -56,4 +57,31 @@ public class UserService : IUserService
 
         return user;
     }
+    public async Task<User?> GetProfileAsync(Guid userId)
+{
+    return await _userRepository.GetByIdAsync(userId);
+}
+
+public async Task<User?> UpdateProfileAsync(
+    Guid userId,
+    UpdateProfileDto dto)
+{
+    var user = await _userRepository.GetByIdAsync(userId);
+
+    if (user == null)
+    {
+        return null;
+    }
+
+    user.FirstName = dto.FirstName;
+    user.LastName = dto.LastName;
+    user.Gender = dto.Gender;
+    user.BirthDate = dto.BirthDate;
+    user.NationalId = dto.NationalId;
+    user.UserName = dto.UserName;
+
+    await _userRepository.UpdateAsync(user);
+
+    return user;
+}
 }

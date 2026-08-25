@@ -27,8 +27,8 @@ public class CariHareketController : ControllerBase
         return Ok(hareketler);
     }
 
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetById(int id)
+    [HttpGet("{id:Guid}")]
+    public async Task<IActionResult> GetById(Guid id)
     {
         var hareket = await _cariHareketService.GetByIdAsync(id);
 
@@ -39,15 +39,15 @@ public class CariHareketController : ControllerBase
         return Ok(hareket);
     }
 
-    [HttpGet("cari/{cariId:int}")]
-    public async Task<IActionResult> GetByCariId(int cariId)
+    [HttpGet("cari/{cariId:Guid}")]
+    public async Task<IActionResult> GetByCariId(Guid cariId)
     {
         var hareketler = await _cariHareketService.GetByCariIdAsync(cariId);
 
         return Ok(hareketler);
     }
-    [HttpGet("cari/{cariId:int}/bakiye")]
-public async Task<IActionResult> GetBakiye(int cariId)
+    [HttpGet("cari/{cariId:Guid}/bakiye")]
+public async Task<IActionResult> GetBakiye(Guid cariId)
 {
     decimal bakiye =
         await _cariHareketService.GetBakiyeAsync(cariId);
@@ -80,16 +80,16 @@ public async Task<IActionResult> GetBakiye(int cariId)
     });
     }
 
-    [HttpPut ("{id:int}")]
-    public async Task<IActionResult> Update(int id, UpdateCariHareketDto dto)
+    [HttpPut ("{id:Guid}")]
+    public async Task<IActionResult> Update(Guid id, UpdateCariHareketDto dto)
     {
         await _cariHareketService.UpdateAsync(id, dto);
 
         return NoContent();
     }
 
-    [HttpDelete("{id:int}")]
-    public async Task<IActionResult>Delete(int id){
+    [HttpDelete("{id:Guid}")]
+    public async Task<IActionResult>Delete(Guid id){
 
         //controller ın yaptığı iş
         await _cariHareketService.DeleteAsync(id);

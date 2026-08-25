@@ -25,12 +25,12 @@ public class CariHareketService : ICariHareketService
         return await _cariHareketRepository.GetAllAsync();
     }
 
-    public async Task<CariHareket?> GetByIdAsync(int id)
+    public async Task<CariHareket?> GetByIdAsync(Guid id)
     {
         return await _cariHareketRepository.GetByIdAsync(id);
     }
 
-    public async Task<List<CariHareket>> GetByCariIdAsync(int cariId)
+    public async Task<List<CariHareket>> GetByCariIdAsync(Guid cariId)
     {
         Cari? cari = await _cariRepository.GetByIdAsync(cariId);
 
@@ -73,7 +73,7 @@ public class CariHareketService : ICariHareketService
     }
 
     public async Task<CariHareket> UpdateAsync(
-        int id,
+        Guid id,
         UpdateCariHareketDto dto)
     {
         CariHareket? hareket =
@@ -99,7 +99,7 @@ public class CariHareketService : ICariHareketService
         return hareket;
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(Guid id)
     {
         CariHareket? hareket =
             await _cariHareketRepository.GetByIdAsync(id);
@@ -113,7 +113,7 @@ public class CariHareketService : ICariHareketService
         await _cariHareketRepository.DeleteAsync(hareket);
     }
 
-    public async Task<decimal> GetBakiyeAsync(int cariId)
+    public async Task<decimal> GetBakiyeAsync(Guid cariId)
 {
     var hareketler =
         await _cariHareketRepository.GetByCariIdAsync(cariId);

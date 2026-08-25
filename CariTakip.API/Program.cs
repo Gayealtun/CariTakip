@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 //openapi dokümanı oluşturur
 builder.Services.AddOpenApi();
 
-//controller sınıflarını sisteme kaydeder
+//controller sınıflarını sisteme kaydeder(DI ve endpoint sistemlerine)
 builder.Services.AddControllers();
 
 //business, dataaccess, repository, dbcontext bağımlılıklarını DI a kaydeder
@@ -38,13 +38,13 @@ builder.Services
 
                 ValidateAudience = true,
                 ValidAudience = builder.Configuration["Jwt:Audience"],
-
+                //token imzasını gizli anahtarla doğrular
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey =
                     new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(key)
                     ),
-
+                //token süresi bittiği anda geçersiz olmasını sağlar
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             };

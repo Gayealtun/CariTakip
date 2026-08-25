@@ -23,7 +23,7 @@ public class CariService : ICariService
     {
         return await _cariRepository.GetAllAsync();
     }
-    public async Task <Cari?>GetByIdAsync(int id)
+    public async Task <Cari?>GetByIdAsync(Guid id)
     {
         return await _cariRepository.GetByIdAsync(id);
     }
@@ -33,7 +33,7 @@ public class CariService : ICariService
         {
             throw new ArgumentException("Unvan boş olamaz");
         }
-        if(cari.Kredilimiti < 0)
+        if(cari.KrediLimiti < 0)
         {
             throw new ArgumentException ("kredi limiti negatif olamaz");
         }
@@ -52,7 +52,7 @@ public class CariService : ICariService
 
         return cari;
     }
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(Guid id)
     {
         Cari? cari = await _cariRepository.GetByIdAsync(id);
 
@@ -76,7 +76,7 @@ public class CariService : ICariService
         {
             throw new ArgumentException("Unvan boş olamaz");
         }
-        if(cari.Kredilimiti < 0)
+        if(cari.KrediLimiti < 0)
         {
             throw new ArgumentException("kredi limiti negatif olamaz");
         }

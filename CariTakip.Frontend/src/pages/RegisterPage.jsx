@@ -17,6 +17,11 @@ function RegisterPage() {
   async function handleRegister(event) {
     event.preventDefault();
 
+    if (nationalId.length !== 11) {
+  setError("TC Kimlik No 11 haneli olmalıdır.");
+  return;
+}
+
     try {
       await registerUser({
         firstName,
@@ -57,28 +62,37 @@ function RegisterPage() {
             required
           />
 
-          <input
-            type="text"
-            placeholder="Cinsiyet"
-            value={gender}
-            onChange={(event) => setGender(event.target.value)}
-            required
-          />
-
-          <input
+        <select
+  value={gender}
+  onChange={(event) => setGender(event.target.value)}
+  required
+>
+  <option value="">Cinsiyet seçiniz</option>
+  <option value="Kadın">Kadın</option>
+  <option value="Erkek">Erkek</option>
+</select>
+          <select
             type="date"
             value={birthDate}
             onChange={(event) => setBirthDate(event.target.value)}
             required
-          />
+          > 
+          <option value="">Cinsiyet seçiniz</option>
+          <option value="Kadın">Kadın</option>
+          <option value="Erkek">Erkek</option>
+          </select>
 
           <input
-            type="text"
-            placeholder="TC Kimlik No"
-            value={nationalId}
-            onChange={(event) => setNationalId(event.target.value)}
-            required
-          />
+  type="text"
+  placeholder="TC Kimlik No"
+  value={nationalId}
+  maxLength={11}
+  onChange={(event) => {
+    const value = event.target.value.replace(/\D/g, "");
+    setNationalId(value.slice(0, 11));
+  }}
+  required
+/>
 
           <input
             type="text"

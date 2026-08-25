@@ -19,9 +19,9 @@ namespace CariTakip.DataAccess.Migrations
 
             modelBuilder.Entity("CariTakip.Entities.Cari", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Adres")
                         .HasColumnType("TEXT");
@@ -38,7 +38,7 @@ namespace CariTakip.DataAccess.Migrations
                     b.Property<decimal>("Kredilimiti")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("OluşturmaTarihi")
+                    b.Property<DateTime>("OlusturmaTarihi")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Telefon")
@@ -61,21 +61,24 @@ namespace CariTakip.DataAccess.Migrations
 
             modelBuilder.Entity("CariTakip.Entities.CariHareket", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Aciklama")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("CariId")
+                    b.Property<bool>("AktifMi")
                         .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("CariId")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Kaynak")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("KaynakId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("KaynakId")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("OlusturmaTarihi")
                         .HasColumnType("TEXT");
@@ -98,8 +101,11 @@ namespace CariTakip.DataAccess.Migrations
 
             modelBuilder.Entity("CariTakip.Entities.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("AktifMi")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("BirthDate")
@@ -119,6 +125,9 @@ namespace CariTakip.DataAccess.Migrations
 
                     b.Property<string>("NationalId")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("OlusturmaTarihi")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")

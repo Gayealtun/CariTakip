@@ -27,30 +27,42 @@ function AppLayout() {
         </div>
 
         <nav className="sidebar-nav">
-          <NavLink
-            to="/cariler"
-            className={({ isActive }) =>
-              isActive
-                ? "sidebar-link active"
-                : "sidebar-link"
-            }
-          >
-            Cari Listesi
-          </NavLink>
+  <NavLink
+    to="/profile"
+    className={({ isActive }) =>
+      isActive
+        ? "sidebar-link active"
+        : "sidebar-link"
+    }
+  >
+    Profilim
+  </NavLink>
 
-          <div className="sidebar-info">
-            Cari hareketlerine, cari listesindeki
-            “Hareketler” butonundan ulaşabilirsiniz.
-          </div>
-        </nav>
+  <NavLink
+    to="/cariler"
+    className={({ isActive }) =>
+      isActive
+        ? "sidebar-link active"
+        : "sidebar-link"
+    }
+  >
+    Cari Listesi
+  </NavLink>
 
-        <button
-          className="sidebar-logout"
-          type="button"
-          onClick={handleLogout}
-        >
-          Çıkış Yap
-        </button>
+  <div className="sidebar-info">
+    Cari hareketlerine, cari listesindeki
+    “Hareketler” butonundan ulaşabilirsiniz.
+  </div>
+</nav>
+
+<button
+  className="sidebar-logout"
+  type="button"
+  onClick={handleLogout}
+>
+  Çıkış Yap
+</button>
+
       </aside>
 
       <main className="app-content">

@@ -15,7 +15,7 @@ function CariPage() {
   const [vergiNoTC, setVergiNoTC] = useState("");
   const [telefon, setTelefon] = useState("");
   const [email, setEmail] = useState("");
-  const [kredilimiti, setKredilimiti] = useState("");
+  const [krediLimiti, setKrediLimiti] = useState("");
   const navigate = useNavigate();
 
 
@@ -44,7 +44,7 @@ function CariPage() {
     setVergiNoTC(cari.vergiNoTC);
     setTelefon(cari.telefon);
     setEmail(cari.email);
-    setKredilimiti(cari.kredilimiti);
+    setKrediLimiti(cari.krediLimiti);
   }
 
   async function handleDelete(id) {
@@ -75,9 +75,9 @@ function CariPage() {
       email,
       tip: 0,
       iban: "",
-      aktifMi: true,
-      krediLimiti: Number(kredilimiti),
+      krediLimiti: Number(krediLimiti),
     };
+    console.log("Gönderilen cari:", cariData);
 
     try {
       if (editingId === null) {
@@ -91,7 +91,7 @@ function CariPage() {
       setVergiNoTC("");
       setTelefon("");
       setEmail("");
-      setKredilimiti("");
+      setKrediLimiti("");
       setError("");
 
       await loadCariler();
@@ -128,35 +128,66 @@ function CariPage() {
         />
 
         <input
-          type="text"
-          placeholder="Vergi No / TC"
-          value={vergiNoTC}
-          onChange={(event) => setVergiNoTC(event.target.value)}
-          required
-        />
+  type="text"
+  placeholder="Vergi No"
+  value={vergiNoTC}
+  maxLength={10}
+  onChange={(event) => {
+    const value = event.target.value.replace(/\D/g, "");
+    setVergiNoTC(value.slice(0, 10));
+  }}
+/>
 
         <input
-          type="text"
-          placeholder="Telefon"
-          value={telefon}
-          onChange={(event) => setTelefon(event.target.value)}
-        />
+  type="tel"
+  placeholder="5** *** ** **"
+  value={telefon}
+  onChange={(event) => {
+    let value = event.target.value.replace(/\D/g, "");
+
+    value = value.slice(0, 10);
+
+    if (value.length > 6) {
+      value =
+        value.slice(0, 3) +
+        " " +
+        value.slice(3, 6) +
+        " " +
+        value.slice(6, 8) +
+        " " +
+        value.slice(8, 10);
+    } else if (value.length > 3) {
+      value =
+        value.slice(0, 3) +
+        " " +
+        value.slice(3);
+    }
+
+    setTelefon(value);
+  }}
+  required
+/>
+       <input
+  type="email"
+  placeholder="ornek@mail.com"
+  value={email}
+  onChange={(event) => setEmail(event.target.value)}
+  required
+/>
 
         <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
+  type="number"
+  min="0"
+  placeholder="Kredi Limiti"
+  value={krediLimiti}
+  onChange={(event) => {
+    const value = event.target.value;
 
-        <input
-          type="number"
-          placeholder="Kredi Limiti"
-          value={kredilimiti}
-          onChange={(event) =>
-            setKredilimiti(event.target.value)
-          }
-        />
+    if (value === "" || Number(value) >= 0) {
+      setKrediLimiti(value);
+    }
+  }}
+/>
 
         <button type="submit">
           {editingId === null
@@ -173,23 +204,26 @@ function CariPage() {
         <table className="data-table">
           <thead>
             <tr>
-              <th>Id</th>
+              <th>Sıra</th>
               <th>Ünvan</th>
               <th>Telefon</th>
               <th>Email</th>
+              <th>Vergi No</th>
               <th>Kredi Limiti</th>
               <th>İşlemler</th>
+
             </tr>
           </thead>
 
           <tbody>
-            {cariler.map((cari) => (
+            {cariler.map((cari, index) => (
               <tr key={cari.id}>
-                <td>{cari.id}</td>
+                <td>{index +1 }</td>
                 <td>{cari.unvan}</td>
                 <td>{cari.telefon}</td>
                 <td>{cari.email}</td>
-                <td>{cari.kredilimiti}</td>
+                <td>{cari.vergiNoTC}</td>
+                <td>{cari.krediLimiti} TL</td>
 
                 <td>
                   <button

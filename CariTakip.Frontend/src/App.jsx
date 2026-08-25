@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import CariPage from "./pages/CariPage";
 import CariHareketPage from "./pages/CariHareketPage";
+import ProfilePage from "./pages/ProfilePage";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import AppLayout from "./components/AppLayout";
@@ -36,10 +37,13 @@ function App() {
             <Route
               path="/cariler/:cariId/hareketler"
               element={<CariHareketPage />}
+
             />
+            <Route path="/profile" element={<ProfilePage />} />
+
           </Route>
         </Route>
-
+        
         <Route
           path="*"
           element={<Navigate to="/" replace />}

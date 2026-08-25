@@ -25,7 +25,7 @@ public class CariHareketRepository : ICariHareketRepository
         .ToListAsync();
     }
 
-    public async Task<List <CariHareket>> GetByCariIdAsync(int cariId)
+    public async Task<List <CariHareket>> GetByCariIdAsync(Guid cariId)
     {
         return await _context.CariHareketler.AsNoTracking()
         .Where(x => x.CariId == cariId)
@@ -33,7 +33,7 @@ public class CariHareketRepository : ICariHareketRepository
         .ToListAsync();
     }
 
-    public async Task<CariHareket?> GetByIdAsync(int id)
+    public async Task<CariHareket?> GetByIdAsync(Guid id)
     {
         return await _context.CariHareketler
         .FirstOrDefaultAsync(x=> x.Id == id);

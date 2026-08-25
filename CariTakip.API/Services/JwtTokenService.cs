@@ -8,8 +8,10 @@ namespace CariTakip.API.Services;
 
 public class JwtTokenService
 {
-    private readonly IConfiguration _configuration;
+    //appsettings.json içindeki ayarları okumaya yarıyor.
+        private readonly IConfiguration _configuration;
 
+    //DI sayesinde configuration 
     public JwtTokenService(IConfiguration configuration)
     {
         _configuration = configuration;
@@ -62,16 +64,18 @@ public class JwtTokenService
                 JwtRegisteredClaimNames.Jti,
                 Guid.NewGuid().ToString() )
         };
-
+            //şifreleme anahtarını oluşturur
         var securityKey =
             new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(key)
             );
+            //hangi algoritmayla imzalayacak
         var credentials =
             new SigningCredentials(
                 securityKey,
                 SecurityAlgorithms.HmacSha256
             );
+            //asıl token burada oluşuyor
         var token = new JwtSecurityToken(
             issuer: issuer,
             audience: audience,
@@ -79,7 +83,7 @@ public class JwtTokenService
             expires: DateTime.UtcNow.AddMinutes(expireMinutes),
             signingCredentials: credentials
         );
-
+        //bu satır token ı string e çevirir
         return new JwtSecurityTokenHandler()
             .WriteToken(token);
     }

@@ -20,9 +20,9 @@ public class CariRepository : ICariRepository
 
 public async Task<List<Cari>> GetAllAsync()
     {
-        return await _context.Cariler.ToListAsync();
+        return await _context.Cariler.OrderBy(s=>s.OlusturmaTarihi).ToListAsync();
     } 
-public async Task<Cari?> GetByIdAsync(int id)
+public async Task<Cari?> GetByIdAsync(Guid id)
     {
         return await _context.Cariler.FindAsync(id);
     }    

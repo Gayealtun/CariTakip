@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CariTakip.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCariTables : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,18 +15,17 @@ namespace CariTakip.DataAccess.Migrations
                 name: "Cariler",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Unvan = table.Column<string>(type: "TEXT", nullable: false),
                     VergiNoTC = table.Column<string>(type: "TEXT", nullable: true),
                     Adres = table.Column<string>(type: "TEXT", nullable: true),
                     Telefon = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: true),
                     Tip = table.Column<int>(type: "INTEGER", nullable: false),
-                    OluşturmaTarihi = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Iban = table.Column<string>(type: "TEXT", nullable: true),
-                    AktifMi = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Kredilimiti = table.Column<decimal>(type: "TEXT", nullable: false)
+                    Kredilimiti = table.Column<decimal>(type: "TEXT", nullable: false),
+                    OlusturmaTarihi = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    AktifMi = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,19 +33,39 @@ namespace CariTakip.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
+                    LastName = table.Column<string>(type: "TEXT", nullable: false),
+                    Gender = table.Column<string>(type: "TEXT", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    NationalId = table.Column<string>(type: "TEXT", nullable: false),
+                    UserName = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false),
+                    OlusturmaTarihi = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    AktifMi = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CariHareketler",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CariId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CariId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Tarih = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Tip = table.Column<int>(type: "INTEGER", nullable: false),
-                    Açiklama = table.Column<string>(type: "TEXT", nullable: true),
+                    Aciklama = table.Column<string>(type: "TEXT", nullable: true),
                     Tutar = table.Column<decimal>(type: "TEXT", nullable: false),
                     Kaynak = table.Column<int>(type: "INTEGER", nullable: false),
-                    KaynakId = table.Column<int>(type: "INTEGER", nullable: true),
-                    OlusturmaTarihi = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    KaynakId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    OlusturmaTarihi = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    AktifMi = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,6 +89,9 @@ namespace CariTakip.DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CariHareketler");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Cariler");
