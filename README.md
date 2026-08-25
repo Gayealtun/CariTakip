@@ -1,6 +1,5 @@
-# Cari Tracking Management System
-
-A full-stack web application developed to manage customer accounts (Cari), financial transactions, and account balances. The project was built as part of a software engineering internship using a layered architecture.
+# Current Account Management System
+A full-stack web application developed to manage customer accounts(Cari), financial transactions, and account balances. The project was built as part of a software engineering internship using a layered architecture.
 
 ---
 
